@@ -48,6 +48,7 @@ $day-names-bg-color: #D8D8D8;
   height: 28px;
 
   &.number {
+    border-radius: 3px;
     cursor: pointer;
     font-weight: 500;
     user-select: none;
@@ -57,8 +58,24 @@ $day-names-bg-color: #D8D8D8;
       border-radius: 5px;
     }
 
-    &.holiday {
+    &.weekend {
       color: $holiday-color;
+    }
+
+    &.anniversary {
+      background-color: tomato;
+    }
+
+    &.birthday {
+      background-color: slateblue;
+    }
+
+    &.busy {
+      background-color: darkcyan;
+    }
+
+    &.holiday {
+      background-color: yellowgreen;
     }
   }
 }

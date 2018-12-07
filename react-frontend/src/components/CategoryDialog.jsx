@@ -13,15 +13,7 @@ import {
   getSelectedDate,
   removeCategory
 } from './model';
-import { enumerable } from '../utils';
-
-const CATEGORY_TYPE = enumerable(
-  'Holiday',
-  'Birthday',
-  'Busy',
-  'Anniversary',
-  'None'
-);
+import { CATEGORY_TYPE } from './consts';
 
 const customContentStyle = {
   width: 320

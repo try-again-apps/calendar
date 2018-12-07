@@ -30,6 +30,7 @@ class Month extends PureComponent {
     }).intersection(weekInterval);
 
     if (weekMonthDays) {
+      const { categories } = this.props;
       const daysInWeek = _range(
         weekMonthDays.start.day,
         weekMonthDays.end.day + 1
@@ -49,12 +50,14 @@ class Month extends PureComponent {
           {_map(daysInWeek, (day, idx) => {
             const dateTime = DateTime.fromObject({ year, month, day });
             const weekDay = dateTime.weekday;
-            const isHoliday = weekDay === 6 || weekDay === 7;
+            const weekend = weekDay === 6 || weekDay === 7;
+            const category = categories.get(dateTime.toISODate());
             return (
               <Day
                 key={idx}
                 day={day}
-                isHoliday={isHoliday}
+                category={category}
+                weekend={weekend}
                 onClick={this.onDayClicked(year, month, day)}
               />
             );

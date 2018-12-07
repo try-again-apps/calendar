@@ -1,0 +1,6 @@
+# ESlint cache
+.eslintcache
+
+node_modules/*
+react-frontend/node_modules/*
+node-backend/node_modules/*

@@ -1,0 +1,68 @@
+@import 'assets/helpers';
+
+$table-highlight-color: #1da1f2;
+
+body {
+  // background-color: #303030;
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+.inner-container {
+  font-size: 14px;
+  padding: 16px;
+  & > :not(:last-child) {
+    margin-bottom: 4px;
+  }
+}
+
+// Fix for table header focus
+.ReactTable .rt-thead [role="columnheader"] {
+  outline: 0;
+}
+
+.ReactTable .rt-thead .rt-th.-sort-asc,
+.ReactTable .rt-thead .rt-td.-sort-asc {
+  box-shadow: inset 0 3px 0 0 $table-highlight-color;
+}
+
+.ReactTable .rt-thead .rt-th.-sort-desc,
+.ReactTable .rt-thead .rt-td.-sort-desc {
+  box-shadow: inset 0 -3px 0 0 $table-highlight-color;
+}
+
+.ReactTable .rt-tbody .rt-td {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ReactTable .rt-tr:hover .rt-td {
+  background: darken($table-highlight-color, 10%);
+  cursor: pointer;
+}
+
+.right {
+  text-align: right;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+h2, h3 {
+  margin-top: 0;
+}
+
+.small-button {
+  width: 48px;
+  min-width: 48px;
+}

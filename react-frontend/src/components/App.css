@@ -1,0 +1,52 @@
+.container {
+  margin: 24px;
+  display: flex;
+  flex-direction: column; }
+  .container > :not(:last-child) {
+    margin-bottom: 16px; }
+
+.months {
+  display: flex;
+  flex-wrap: wrap; }
+
+.month {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 30%;
+  padding: 8px; }
+  .month .label {
+    font-weight: bold;
+    color: #014c92;
+    margin-bottom: 8px; }
+
+.day-names {
+  border-radius: 3px;
+  display: flex;
+  background: #D8D8D8;
+  color: #8c8c8c; }
+
+.day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 28px; }
+  .day.number {
+    cursor: pointer;
+    font-weight: 500;
+    user-select: none; }
+    .day.number:hover {
+      background: red;
+      border-radius: 5px; }
+    .day.number.holiday {
+      color: #2E9AFE; }
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .navbar .title {
+    font-size: 24px;
+    font-weight: bold;
+    padding-right: 16px; }

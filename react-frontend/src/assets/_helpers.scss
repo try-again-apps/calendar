@@ -1,0 +1,13 @@
+@for $i from 0 through 4 {
+  .row-spacing-#{$i} {
+    & > :not(:last-child) {
+      margin-bottom: 8px * $i;
+    }
+  }
+
+  .col-spacing-#{$i} {
+    & > :not(:last-child) {
+      margin-right: 8px * $i;
+    }
+  }
+}

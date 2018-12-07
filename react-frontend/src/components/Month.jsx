@@ -45,6 +45,8 @@ class Month extends PureComponent {
         }
       }
 
+      const now = DateTime.local();
+
       return (
         <div key={weekNumber} className="week">
           {_map(daysInWeek, (day, idx) => {
@@ -52,13 +54,16 @@ class Month extends PureComponent {
             const weekDay = dateTime.weekday;
             const weekend = weekDay === 6 || weekDay === 7;
             const category = categories.get(dateTime.toISODate());
+            const today =
+              day === now.day && month === now.month && year === now.year;
             return (
               <Day
-                key={idx}
-                day={day}
                 category={category}
-                weekend={weekend}
+                day={day}
+                key={idx}
                 onClick={this.onDayClicked(year, month, day)}
+                today={today}
+                weekend={weekend}
               />
             );
           })}
@@ -126,9 +131,9 @@ class Month extends PureComponent {
   };
 
   render() {
-    const { month, year, categories } = this.props;
-    console.info(categories.toJS());
+    const { month, year } = this.props;
     const dateTime = DateTime.fromObject({ month, year });
+
     return (
       <div className="month">
         <div className="label">{dateTime.monthLong}</div>

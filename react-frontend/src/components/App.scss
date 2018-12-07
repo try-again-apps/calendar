@@ -58,6 +58,10 @@ $day-names-bg-color: #D8D8D8;
       border-radius: 5px;
     }
 
+    &.today {
+      background-color: lightgray;
+    }
+
     &.weekend {
       color: $holiday-color;
     }

@@ -13,10 +13,10 @@ class Day extends PureComponent {
   });
 
   render() {
-    const { category, day, weekend, onClick } = this.props;
+    const { category, day, today, weekend, onClick } = this.props;
     const className = classNames(
       'day number',
-      { weekend },
+      { today, weekend },
       this.categoryClassName(category)
     );
 
@@ -31,6 +31,7 @@ class Day extends PureComponent {
 Day.propTypes = {
   category: PropTypes.string,
   day: PropTypes.number,
+  today: PropTypes.bool,
   weekend: PropTypes.bool,
 
   onClick: PropTypes.func

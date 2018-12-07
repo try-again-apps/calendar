@@ -22,20 +22,14 @@ class Navbar extends PureComponent {
     ));
   };
 
-  onPrevious = () => {
-    const {
-      router,
-      params: { year }
-    } = this.props;
-    router.push(`/${+year - 1}`);
+  onPrevious = currentYear => () => {
+    const { router } = this.props;
+    router.push(`/${+currentYear - 1}`);
   };
 
-  onNext = () => {
-    const {
-      router,
-      params: { year }
-    } = this.props;
-    router.push(`/${+year + 1}`);
+  onNext = currentYear => () => {
+    const { router } = this.props;
+    router.push(`/${+currentYear + 1}`);
   };
 
   onYearChange = (event, index, year) => {
@@ -45,12 +39,12 @@ class Navbar extends PureComponent {
 
   render() {
     const {
-      params: { year }
+      params: { year = 2018 }
     } = this.props;
 
     return (
       <div className="navbar">
-        <IconButton onClick={this.onPrevious}>
+        <IconButton onClick={this.onPrevious(year)}>
           <ArrowBackIcon />
         </IconButton>
         <div className="title">Calendar </div>
@@ -61,7 +55,7 @@ class Navbar extends PureComponent {
         >
           {this.generateYearItems()}
         </SelectField>
-        <IconButton onClick={this.onNext}>
+        <IconButton onClick={this.onNext(year)}>
           <ArrowForwardIcon />
         </IconButton>
       </div>

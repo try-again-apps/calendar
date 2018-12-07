@@ -1,17 +1,22 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import { DateTime, Info, Interval } from 'luxon';
 import _range from 'lodash/range';
 import _map from 'lodash/map';
 import _first from 'lodash/first';
 import _reduce from 'lodash/reduce';
+import { connect } from 'react-redux';
 
 import { monthInterval } from './utils';
 import Day from './Day';
+import { getCategories, openCategoryDialog } from './model';
 
 class Month extends PureComponent {
-  onDayClicked = (month, day) => () => {
-    console.info(month, day);
+  onDayClicked = (year, month, day) => () => {
+    const { openCategoryDialog } = this.props;
+    const dateTime = DateTime.fromObject({ year, month, day });
+    openCategoryDialog(dateTime.toISODate());
   };
 
   renderWeek = ({ month, year, weekNumber }) => {
@@ -40,7 +45,7 @@ class Month extends PureComponent {
       }
 
       return (
-        <div key={weekNumber} style={{ display: 'flex' }}>
+        <div key={weekNumber} className="week">
           {_map(daysInWeek, (day, idx) => {
             const dateTime = DateTime.fromObject({ year, month, day });
             const weekDay = dateTime.weekday;
@@ -50,7 +55,7 @@ class Month extends PureComponent {
                 key={idx}
                 day={day}
                 isHoliday={isHoliday}
-                onClick={this.onDayClicked(month, day)}
+                onClick={this.onDayClicked(year, month, day)}
               />
             );
           })}
@@ -118,7 +123,8 @@ class Month extends PureComponent {
   };
 
   render() {
-    const { month, year } = this.props;
+    const { month, year, categories } = this.props;
+    console.info(categories.toJS());
     const dateTime = DateTime.fromObject({ month, year });
     return (
       <div className="month">
@@ -137,8 +143,18 @@ class Month extends PureComponent {
 }
 
 Month.propTypes = {
+  categories: ImmutablePropTypes.map.isRequired,
   month: PropTypes.number.isRequired,
-  year: PropTypes.number.isRequired
+  year: PropTypes.number.isRequired,
+
+  openCategoryDialog: PropTypes.func.isRequired
 };
 
-export default Month;
+const mapStateToProps = state => ({
+  categories: getCategories(state)
+});
+
+export default connect(
+  mapStateToProps,
+  { openCategoryDialog }
+)(Month);

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Paper from 'material-ui/Paper';
 
@@ -24,7 +23,7 @@ class App extends Component {
           <Paper zDepth={4} style={paperStyle}>
             {this.props.children}
           </Paper>
-          <CategoryDialog active={false} />
+          <CategoryDialog />
         </div>
       </MuiThemeProvider>
     );

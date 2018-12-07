@@ -29,6 +29,10 @@ $day-names-bg-color: #D8D8D8;
   }
 }
 
+.week {
+  display: flex;
+}
+
 .day-names {
   border-radius: 3px;
   display: flex;
@@ -49,7 +53,7 @@ $day-names-bg-color: #D8D8D8;
     user-select: none;
 
     &:hover {
-      background: red;
+      background: lighten($holiday-color, 30);
       border-radius: 5px;
     }
 

@@ -9,6 +9,8 @@ import MenuItem from 'material-ui/MenuItem';
 import _range from 'lodash/range';
 import _map from 'lodash/map';
 
+import { yearValidated } from './utils';
+
 const styles = {
   customWidth: {
     width: 100
@@ -39,23 +41,25 @@ class Navbar extends PureComponent {
 
   render() {
     const {
-      params: { year = 2018 }
+      params: { year }
     } = this.props;
+
+    const validYear = yearValidated(year);
 
     return (
       <div className="navbar">
-        <IconButton onClick={this.onPrevious(year)}>
+        <IconButton onClick={this.onPrevious(validYear)}>
           <ArrowBackIcon />
         </IconButton>
-        <div className="title">Calendar </div>
+        <div className="title">Calendar</div>
         <SelectField
-          value={+year}
+          value={validYear}
           style={styles.customWidth}
           onChange={this.onYearChange}
         >
           {this.generateYearItems()}
         </SelectField>
-        <IconButton onClick={this.onNext(year)}>
+        <IconButton onClick={this.onNext(validYear)}>
           <ArrowForwardIcon />
         </IconButton>
       </div>

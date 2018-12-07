@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { DateTime, Settings } from 'luxon';
+import { Settings } from 'luxon';
 import _range from 'lodash/range';
 import _map from 'lodash/map';
 
 import Month from './Month';
+import { yearValidated } from './utils';
 
 class Calendar extends PureComponent {
   constructor(props) {
@@ -12,26 +13,16 @@ class Calendar extends PureComponent {
     Settings.defaultLocale = 'en';
   }
 
-  yearValidated = year => {
-    const dateTime = DateTime.fromObject({ year: +year });
-
-    if (dateTime) {
-      return dateTime.year;
-    }
-
-    return 2018;
-  };
-
   render() {
     const {
-      params: { year = 2018 }
+      params: { year }
     } = this.props;
 
     return (
       <div className="calendar">
         <div className="months">
           {_map(_range(1, 13), month => (
-            <Month key={month} month={month} year={this.yearValidated(year)} />
+            <Month key={month} month={month} year={yearValidated(year)} />
           ))}
         </div>
       </div>

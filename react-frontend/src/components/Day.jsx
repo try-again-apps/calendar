@@ -1,32 +1,25 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { CATEGORY_TYPE } from './consts';
 
-class Day extends PureComponent {
-  categoryClassName = category => ({
+const Day = ({ category, day, today, weekend, onClick }) => {
+  const className = classNames('day number', {
     anniversary: category === CATEGORY_TYPE.Anniversary,
     birthday: category === CATEGORY_TYPE.Birthday,
     busy: category === CATEGORY_TYPE.Busy,
-    holiday: category === CATEGORY_TYPE.Holiday
+    holiday: category === CATEGORY_TYPE.Holiday,
+    today,
+    weekend
   });
 
-  render() {
-    const { category, day, today, weekend, onClick } = this.props;
-    const className = classNames(
-      'day number',
-      { today, weekend },
-      this.categoryClassName(category)
-    );
-
-    return (
-      <div onClick={onClick} className={className}>
-        <div>{day}</div>
-      </div>
-    );
-  }
-}
+  return (
+    <div onClick={onClick} className={className}>
+      <div>{day}</div>
+    </div>
+  );
+};
 
 Day.propTypes = {
   category: PropTypes.string,

@@ -10,11 +10,7 @@ export const monthInterval = ({ month, year }) => {
   return Interval.fromDateTimes(monthStart, monthEnd);
 };
 
-// export const endOfMonth = ({ month, year }) => {
-//   const monthStart = DateTime.fromObject({ month, year });
-//   return DateTime.fromObject({
-//     day: monthStart.daysInMonth,
-//     month,
-//     year
-//   });
-// };
+export const yearValidated = year => {
+  const dateTime = DateTime.fromObject({ year: +year });
+  return dateTime ? dateTime.year : DateTime.local().year;
+};

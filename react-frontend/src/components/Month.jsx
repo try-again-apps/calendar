@@ -1,79 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import { DateTime, Info, Interval } from 'luxon';
+import { DateTime, Info } from 'luxon';
 import _range from 'lodash/range';
 import _map from 'lodash/map';
-import _first from 'lodash/first';
 import _reduce from 'lodash/reduce';
-import { connect } from 'react-redux';
 
-import { monthInterval } from './utils';
-import Day from './Day';
-import { getCategories, openCategoryDialog } from './model';
+import Week from './Week';
 
 class Month extends PureComponent {
-  onDayClicked = (year, month, day) => () => {
-    const { openCategoryDialog } = this.props;
-    const dateTime = DateTime.fromObject({ year, month, day });
-    openCategoryDialog(dateTime.toISODate());
-  };
-
-  renderWeek = ({ month, year, weekNumber }) => {
-    const { year: calendarYear } = this.props;
-    const startWeekDate = DateTime.fromObject({ weekYear: year, weekNumber });
-    const endWeekDate = startWeekDate.plus({ days: 6 });
-    const weekInterval = Interval.fromDateTimes(startWeekDate, endWeekDate);
-    const weekMonthDays = monthInterval({
-      month,
-      year: calendarYear
-    }).intersection(weekInterval);
-
-    if (weekMonthDays) {
-      const { categories } = this.props;
-      const daysInWeek = _range(
-        weekMonthDays.start.day,
-        weekMonthDays.end.day + 1
-      );
-
-      // Fill with empty days to align first week
-      if (daysInWeek.length < 7) {
-        if (_first(daysInWeek) === 1) {
-          while (daysInWeek.length < 7) {
-            daysInWeek.unshift(null);
-          }
-        }
-      }
-
-      const now = DateTime.local();
-
-      return (
-        <div key={weekNumber} className="week">
-          {_map(daysInWeek, (day, idx) => {
-            const dateTime = DateTime.fromObject({ year, month, day });
-            const weekDay = dateTime.weekday;
-            const weekend = weekDay === 6 || weekDay === 7;
-            const category = categories.get(dateTime.toISODate());
-            const today =
-              day === now.day && month === now.month && year === now.year;
-            return (
-              <Day
-                category={category}
-                day={day}
-                key={idx}
-                onClick={this.onDayClicked(year, month, day)}
-                today={today}
-                weekend={weekend}
-              />
-            );
-          })}
-        </div>
-      );
-    }
-
-    return null;
-  };
-
   renderDayNames = () => {
     const weekdays = Info.weekdays('short');
     return (
@@ -125,9 +59,16 @@ class Month extends PureComponent {
       weeksInMonth = this.generateWeeks(_range(startWeek, endWeek + 1), year);
     }
 
-    return _map(weeksInMonth, ({ weekNumber, year }) =>
-      this.renderWeek({ month, year, weekNumber })
-    );
+    const { year: calendarYear } = this.props;
+    return _map(weeksInMonth, ({ weekNumber, year }) => (
+      <Week
+        calendarYear={calendarYear}
+        key={weekNumber}
+        month={month}
+        year={year}
+        weekNumber={weekNumber}
+      />
+    ));
   };
 
   render() {
@@ -151,18 +92,8 @@ class Month extends PureComponent {
 }
 
 Month.propTypes = {
-  categories: ImmutablePropTypes.map.isRequired,
   month: PropTypes.number.isRequired,
-  year: PropTypes.number.isRequired,
-
-  openCategoryDialog: PropTypes.func.isRequired
+  year: PropTypes.number.isRequired
 };
 
-const mapStateToProps = state => ({
-  categories: getCategories(state)
-});
-
-export default connect(
-  mapStateToProps,
-  { openCategoryDialog }
-)(Month);
+export default Month;
